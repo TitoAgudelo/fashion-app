@@ -1,0 +1,87 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: Brands API
+  description: |
+    This API describes service providing brand information.
+basePath: /api
+schemes:
+  - http
+produces:
+  - application/json
+paths:
+  /brands:
+    get:
+      summary: Get brands overview.
+      responses:
+        200:
+          description: |
+            Returns brands overview
+          schema:
+            $ref: '#/definitions/brands_container'
+  /brands/{brand_id}:
+    get:
+      summary: Get brand details.
+      parameters:
+        - $ref: '#/parameters/brand_id'
+      responses:
+        200:
+          description: |
+            Returns the brand details.
+          schema:
+            $ref: '#/definitions/brand_details'
+definitions:
+  brands_container:
+    type: object
+    description: Containter for brands overview information
+    properties:
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/brand'
+
+  brand:
+    type: object
+    description: Short information about brand
+    properties:
+      id:
+        type: string
+        description: Brand id
+        format: uuid
+        example: "22a62810-a797-4a2a-a66f-a52114242704"
+      name:
+        type: string
+        description: Name of the brand
+        example: "Pier One"
+
+  brand_details:
+    type: object
+    description: Brand detailed information
+    properties:
+      id:
+        type: string
+        description: Brand id
+        format: uuid
+        example: "22a62810-a797-4a2a-a66f-a52114242704"
+      name:
+        type: string
+        description: Name of the brand
+        example: "Pier One"
+      logo:
+        type: string
+        description: Brand logo url
+        example: "https://zlabels.com/sites/default/files/pier_one_logo_svg_0.svg"
+      details:
+        type: string
+        description: Detailed brands description
+        example: "Pier One brings a dose of sophisticated style to anyone..."
+
+parameters:
+  brand_id:
+    name: brand_id
+    in: path
+    required: true
+    description: |
+      The unique id of the brand (like 22a62810-a797-4a2a-a66f-a52114242704).
+    type: string
+    format: uuid
